@@ -1,5 +1,7 @@
 package Formas;
 
+import java.util.Map;
+
 public abstract class Forma {
 	private TipoForma tipo;
 	
@@ -10,4 +12,7 @@ public abstract class Forma {
 	public TipoForma getTipo() {
 		return tipo;
 	}
+	
+	public abstract String[] getParametros();
+	public abstract void setParametros(Map<String, Double> args);
 }

@@ -1,7 +1,11 @@
+import java.util.Map;
+
 import Formas.Circulo;
 import Formas.Forma;
+import Formas.GeometriaPlana;
 import Formas.Retangulo;
 import Formas.TipoForma;
+import Formas.Trapezio;
 import Formas.Triangulo;
 
 public class Calculador {
@@ -18,89 +22,35 @@ public class Calculador {
 
 	public void init() {
 		do {
-			
+
 			TipoForma tipo = this.console.selecionaTipo();
 			Forma forma = null;
 
-			switch (console.selecionaTipo()) {
+			switch (tipo) {
 			case RETANGULO:
-
-				console.enviarMensagem(Messages.getString("Calculador.DigitaBase")); //$NON-NLS-1$
-				String inputBase = console.lerLinha();
-				console.enviarMensagem(Messages.getString("Calculador.DigitaAltura")); //$NON-NLS-1$
-				String inputAltura = console.lerLinha();
-				console.enviarMensagem(""); //$NON-NLS-1$
-
-				Retangulo retangulo = new Retangulo(Float.valueOf(inputAltura), Float.valueOf(inputBase));
-
-				System.out.println(Messages.getString("Calculador.DigitaArea") + retangulo.getArea()); //$NON-NLS-1$
-				console.enviarMensagem(Messages.getString("Calculador.DigitaPerimetro") + retangulo.getPerimetro()); //$NON-NLS-1$
-				console.enviarMensagem(""); //$NON-NLS-1$
-
+				forma = new Retangulo();
 				break;
 
 			case TRIANGULO:
-				console.enviarMensagem(" Digite a altura: "); //$NON-NLS-1$
-				String inputAlturaTriangulo = console.lerLinha();
-				console.enviarMensagem(" Digite a base: "); //$NON-NLS-1$
-				String inputBaseTriangulo = console.lerLinha();
-
-				console.enviarMensagem(Messages.getString("Calculador.DigiteLado")); //$NON-NLS-1$
-				String inputLadoTriangulo = console.lerLinha();
-
-				Triangulo triangulo = new Triangulo(Float.valueOf(inputAlturaTriangulo),
-						Float.valueOf(inputBaseTriangulo), Float.valueOf(inputLadoTriangulo));
-
-				console.enviarMensagem(""); //$NON-NLS-1$
-				console.enviarMensagem(" area: " + triangulo.getArea()); //$NON-NLS-1$
-				console.enviarMensagem(" Perimetro: " + triangulo.getPerimetro()); //$NON-NLS-1$
-				console.enviarMensagem(""); //$NON-NLS-1$
+				forma = new Triangulo();
 				break;
 
 			case CIRCULO:
-				double pi = Math.PI;
+				forma = new Circulo();
 				console.enviarMensagem(Messages.getString("Calculador.DigiteDiametro")); //$NON-NLS-1$
-				String inputAreaCirculo = console.lerLinha();
-				console.enviarMensagem(Messages.getString("Calculador.DigiteRaio")); //$NON-NLS-1$
-				String inputRaio = console.lerLinha();
-				String inputdiametroCirculo = console.lerLinha();
-
-				Circulo circulo = new Circulo(Double.valueOf(inputRaio), Double.valueOf(inputAreaCirculo));
-
-				console.enviarMensagem(""); //$NON-NLS-1$
-				console.enviarMensagem(" Area: " + circulo.getArea()); //$NON-NLS-1$
-				console.enviarMensagem(" Perimetro: " + circulo.getDiametro()); //$NON-NLS-1$
-				console.enviarMensagem(""); //$NON-NLS-1$
-
 				break;
 
 			case TRAPEZIO:
-
-				console.enviarMensagem(Messages.getString("Calculador.DigiteBaseSup")); //$NON-NLS-1$
-				String inputBaseTrapezioSup = console.lerLinha();
-
-				console.enviarMensagem(Messages.getString("Calculador.DigiteBaseInf")); //$NON-NLS-1$
-				String inputBaseTrapezio = console.lerLinha();
-
-				console.enviarMensagem(Messages.getString("Calculador.DigiteTamanhoLado")); //$NON-NLS-1$
-				String inputLado = console.lerLinha();
-
-				console.enviarMensagem(" Digite a altura: "); //$NON-NLS-1$
-				String inputAlturaTrapezio = console.lerLinha();
-
-				console.enviarMensagem(""); //$NON-NLS-1$
-
-				float areaTrapezio = criarAreaTrapezio(Float.valueOf(inputBaseTrapezio),
-						Float.valueOf(inputBaseTrapezioSup), Float.valueOf(inputAlturaTrapezio));
-
-				float perimetroTrapezio = criarPerimetroTrapezio(Float.valueOf(inputBaseTrapezio),
-						Float.valueOf(inputBaseTrapezioSup), Float.valueOf(inputLado));
-
-				console.enviarMensagem(" Area: " + areaTrapezio); //$NON-NLS-1$
-				console.enviarMensagem(" Perimetro: " + perimetroTrapezio); //$NON-NLS-1$
+				forma = new Trapezio();
 				console.enviarMensagem(""); //$NON-NLS-1$
 				break;
-			// e pra fazer o calculador
+
+			}
+			Map<String, Double> parametros = this.console.readParametros(forma.getParametros());
+			forma.setParametros(parametros);
+
+			if (forma != null) {
+				((GeometriaPlana) forma).exibirCalculo();
 			}
 
 		} while (console.confirmaSN(Messages.getString("Calculador.EnviarMensagem"))); //$NON-NLS-1$

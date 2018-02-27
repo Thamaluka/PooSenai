@@ -1,3 +1,5 @@
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import Formas.TipoForma;
@@ -43,16 +45,27 @@ public class Console {
 
 	public void enviarMensagem(String mensagem) {
 		System.out.println(mensagem);
-		// TODO: implementar
 	}
 
 	public void close() {
 		this.scanner.close();
-
+		System.out.println("=== FIM ===");
 	}
 
-	public String lerLinha() {
-		return scanner.nextLine();
-
+	public Map<String, Double> readParametros(String[] parametros) {
+		System.out.println("Informe os valores para os parametros: ");
+		Map<String, Double> aux = new LinkedHashMap<>(parametros.length);
+		for (String parametro : parametros) {
+			aux.put(parametro, this.readParametro(parametro));
+		}
+		return aux;
 	}
+
+	protected double readParametro(String parametro) {
+		System.out.println(" - " + parametro + ": ");
+		String input = scanner.nextLine();
+		System.out.println("");
+		return Double.valueOf(input);
+	}
+
 }

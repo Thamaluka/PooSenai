@@ -1,14 +1,28 @@
 package Formas;
 
-public class Retangulo implements GeometriaPlana {
+import java.util.Map;
+
+public class Retangulo extends Forma  implements GeometriaPlana {
+	
+	private enum Parametros {BASE,ALTURA};
 	
 	double altura;
 	double base;
 	
 	public Retangulo (double altura, double base){
-		super();
+		super(TipoForma.RETANGULO);
 		this.altura = altura;
 		this.base = base;
+	}
+	
+	public Retangulo () {
+		super(TipoForma.RETANGULO);
+	}
+	
+	public Retangulo(double altura) {
+		this();
+		this.altura = altura;
+		
 	}
 	
 	public double getAltura() {
@@ -29,11 +43,21 @@ public class Retangulo implements GeometriaPlana {
 
 	@Override
 	public void exibirCalculo() {
-		System.out.println(" Area do Circulo: " + this.getArea());
-		System.out.println(" Perimetro do Circulo: " + this.getPerimetro());	
+		// TODO Auto-generated method stub
+		
 	}
-	
-	
-	
+
+	@Override
+	public String[] getParametros() {
+	String [] parametros = { Parametros.ALTURA.name() , Parametros.BASE.name()};
+		return null;
+	}
+
+	@Override
+	public void setParametros(Map<String, Double> args) {
+		this.altura = args.get(Parametros.ALTURA.name());
+		this.base = args.get(Parametros.BASE.name());
+	}
+
 	
 }
